@@ -1,6 +1,8 @@
-var docblock  = require('jstransform/src/docblock');
-var transform = require('react-tools').transform;
-var through   = require('through');
+var docblock     = require('jstransform/src/docblock');
+var jstransform  = require('jstransform');
+var jsxtransform = require('react-tools').transform;
+var through      = require('through');
+var visitors     = require('react-tools/vendor/fbtransform/visitors');
 
 var isJSXExtensionRe = /^.+\.jsx$/;
 
@@ -8,9 +10,12 @@ function parsePragma(data) {
   return docblock.parseAsObject(docblock.extract(data));
 }
 
-function process(file, isJSXFile, transformer) {
-  transformer = transformer || transform;
+function es6transformer(js) {
+    var visitorList = visitors.getAllVisitors();
+    return jstransform.transform(visitorList, js).code;
+}
 
+function process(file, isJSXFile, transformer) {
   var data = '';
   function write(chunk) {
     return data += chunk;
@@ -39,7 +44,7 @@ function process(file, isJSXFile, transformer) {
 }
 
 function getExtensionsMatcher(extensions) {
-  return new RegExp('\.(' + extensions.join('|') + ')$');
+  return new RegExp('.(' + extensions.join('|') + ')$');
 }
 
 module.exports = function(file, options) {
@@ -48,9 +53,11 @@ module.exports = function(file, options) {
     .concat(options.extension)
     .concat(options.x)
     .filter(Boolean)
-    .map(function(ext) { return ext[0] === '.' ? ext.slice(1) : ext });
+    .map(function(ext) { return ext[0] === '.' ? ext.slice(1) : ext; });
   var isJSXFile = getExtensionsMatcher(extensions);
-  return process(file, isJSXFile.exec(file));
+
+  var transformer = options.withoutes6 ? jsxtransform : es6transformer;
+  return process(file, isJSXFile.exec(file), transformer);
 };
 module.exports.process = process;
 module.exports.isJSXExtensionRe = isJSXExtensionRe;

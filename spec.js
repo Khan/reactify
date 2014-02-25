@@ -1,15 +1,14 @@
 var ok = require('assert').ok,
     browserify = require('browserify'),
-    reactify = require('./index'),
+    reactiscriptsixify = require('./index'),
     undoubted = require('./undoubted'),
-    reactiscriptsixify = require('./with-es6'),
     coffeeify = require('coffeeify');
 
-describe('reactify', function() {
+describe('reactiscriptsixify', function() {
   var bundle = function(entry, cb) {
     return browserify(entry)
       .transform(coffeeify)
-      .transform(reactify)
+      .transform(reactiscriptsixify)
       .bundle(cb);
   };
 
@@ -55,7 +54,7 @@ describe('reactify', function() {
 
   it('works for *.js without pragma when we ask it so', function(done) {
     return browserify('./fixtures/main.jsnox')
-      .transform({extension: 'jsnox'}, reactify)
+      .transform({extension: 'jsnox'}, reactiscriptsixify)
       .bundle(function(err, result) {
         ok(!err);
         ok(result);
