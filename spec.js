@@ -2,11 +2,12 @@ var ok = require('assert').ok,
     browserify = require('browserify'),
     reactify = require('./index'),
     undoubted = require('./undoubted'),
+    reactiscriptsixify = require('./with-es6'),
     coffeeify = require('coffeeify');
 
 describe('reactify', function() {
   var bundle = function(entry, cb) {
-    return b = browserify(entry)
+    return browserify(entry)
       .transform(coffeeify)
       .transform(reactify)
       .bundle(cb);
@@ -52,7 +53,7 @@ describe('reactify', function() {
     });
   });
 
-  return it('works for *.js without pragma when we ask it so', function(done) {
+  it('works for *.js without pragma when we ask it so', function(done) {
     return browserify('./fixtures/main.jsnox')
       .transform({extension: 'jsnox'}, reactify)
       .bundle(function(err, result) {
@@ -62,4 +63,13 @@ describe('reactify', function() {
       });
   });
 
+  return it('works for ecmascript 6 files', function(done) {
+      return browserify('./fixtures/es6.jsx')
+        .transform(reactiscriptsixify)
+        .bundle(function(err, result) {
+          ok(!err);
+          ok(result);
+          return done();
+      });
+  });
 });

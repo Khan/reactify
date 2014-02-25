@@ -1,10 +1,10 @@
 {
-  "name": "reactify",
+  "name": "reactiscriptsixify",
   "version": "0.8.1",
-  "description": "browserify v2 plugin for react from Facebook to support jsx",
+  "description": "browserify v2 plugin for react from Facebook to support jsx with ecmascript 6",
   "main": "index.js",
   "dependencies": {
-    "jstransform": "2.x.x",
+    "jstransform": "~3.0.0",
     "through": "~2.3.4",
     "react-tools": ">= 0.9.0"
   },
@@ -16,9 +16,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/andreypopp/reactify.git"
+    "url": "git://github.com/Khan/reactiscriptsixify.git"
   },
-  "homepage": "https://github.com/andreypopp/reactify",
+  "homepage": "https://github.com/Khan/reactiscriptsixify",
   "keywords": [
     "react",
     "browserify",
@@ -30,9 +30,13 @@
     "transform"
   ],
   "author": {
+    "name": "Joel Burget",
+    "email": "joel@khanacademy.org"
+  },
+  "contributors": [{
     "name": "Andrey Popp",
     "email": "8mayday@gmail.com",
     "url": "http://andreypopp.com"
-  },
+  }],
   "license": "MIT"
 }
