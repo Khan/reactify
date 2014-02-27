@@ -1,6 +1,5 @@
 var docblock     = require('jstransform/src/docblock');
 var jstransform  = require('jstransform');
-var jsxtransform = require('react-tools').transform;
 var through      = require('through');
 var visitors     = require('react-tools/vendor/fbtransform/visitors');
 
@@ -44,7 +43,7 @@ function process(file, isJSXFile, transformer) {
 }
 
 function getExtensionsMatcher(extensions) {
-  return new RegExp('.(' + extensions.join('|') + ')$');
+  return new RegExp('\\.(' + extensions.join('|') + ')$');
 }
 
 module.exports = function(file, options) {
@@ -56,8 +55,7 @@ module.exports = function(file, options) {
     .map(function(ext) { return ext[0] === '.' ? ext.slice(1) : ext; });
   var isJSXFile = getExtensionsMatcher(extensions);
 
-  var transformer = options.withoutes6 ? jsxtransform : es6transformer;
-  return process(file, isJSXFile.exec(file), transformer);
+  return process(file, isJSXFile.exec(file), es6transformer);
 };
 module.exports.process = process;
 module.exports.isJSXExtensionRe = isJSXExtensionRe;

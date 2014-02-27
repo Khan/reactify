@@ -63,9 +63,7 @@ describe('reactiscriptsixify', function() {
   });
 
   return it('works for ecmascript 6 files', function(done) {
-      return browserify('./fixtures/es6.jsx')
-        .transform(reactiscriptsixify)
-        .bundle(function(err, result) {
+      return bundle('./fixtures/es6.jsx', function(err, result) {
           ok(!err);
           ok(result);
           return done();
